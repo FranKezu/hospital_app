@@ -4,13 +4,13 @@ import java.util.*;
 
 public class Hospital {
     private String name;
-    private String address;
+    private String location;
     private Map<String, Department> departments;
 
-    public Hospital(String name, String address){
+    public Hospital(String name, String location){
         this.name = name;
-        this.address = address;
-        this.departments = new HashMap<>();
+        this.location = location;
+        departments = new HashMap<>();
     }
 
     public String getName(){
@@ -20,12 +20,12 @@ public class Hospital {
         this.name = name;
     }
 
-    public String getAddress(){
-        return address;
+    public String getLocation(){
+        return location;
     }
 
-    public void setAddress(String address){
-        this.address = address;
+    public void setLocation(String location){
+        this.location = location;
     }
 
     public void addDepartment(Department area){

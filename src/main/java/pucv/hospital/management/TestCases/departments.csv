@@ -1,0 +1,7 @@
+nombre,descripcion,numeroCamas
+UCI,Unidad de Cuidados Intensivos,8
+Emergencia,Departamento de Emergencias,12
+Cardiología,Unidad de Cardiología,10
+Neurología,Departamento de Neurología,15
+General,Hospitalización General,25
+Pediatría,Departamento Pediátrico,20

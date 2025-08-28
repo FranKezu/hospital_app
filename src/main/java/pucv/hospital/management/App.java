@@ -1,10 +1,10 @@
 package pucv.hospital.management;
-
-/**
- * Hello world!
- */
+import java.io.*;
 public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws IOException {
+        Hospital hospital = new Hospital("Hospital PUCV", "Av. Brasil 2147, Valparaíso");
+        DataLoader.cargarDatosPrueba(hospital);
+        Menu menu = new Menu();
+        menu.displayMenu(hospital); 
     }
 }

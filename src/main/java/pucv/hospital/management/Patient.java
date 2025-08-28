@@ -71,4 +71,19 @@ public class Patient{
         this.rut = rut;
     }
 
+    public void showPatient(){
+        System.out.println("\n┌─────────────────────────────────────┐");
+        System.out.println("│           Información del paciente           │");
+        System.out.println("├─────────────────────────────────────┤");
+        System.out.printf("│ Paciente: %-25s │%n", name);
+        System.out.printf("│ RUT: %-30s │%n", rut);
+        System.out.printf("│ Edad: %-29d │%n", age);
+        System.out.printf("│ Género: %-27s │%n", gender);
+        System.out.printf("│ Estado: %-27s │%n", level);
+        System.out.printf("│ Fecha de ingreso: %-17s │%n", entryDate);
+        System.out.printf("│ Fecha de alta: %-20s │%n", dischargeDate);
+        System.out.printf("│ Dirección: %-24s │%n", address);
+        System.out.println("└─────────────────────────────────────┘");
+    }
+
 }

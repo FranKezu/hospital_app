@@ -1,6 +1,8 @@
 package pucv.hospital.management;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Menu {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -14,7 +16,7 @@ public class Menu {
     // Pausa para poder leer el contenido que aparece en pantalla.
     public static void pause() throws IOException{
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Presione cualquier letra para continuar...");
+        System.out.print("\nPresione cualquier letra para continuar...");
         input.readLine();
     }
 
@@ -33,12 +35,13 @@ public class Menu {
                 switch (option){
                     case 1:
                         System.out.println("Administrar departamntos");
-                        MenuDepartment menu = new MenuDepartment();
-                        menu.display(hospital);
+                        MenuDepartment menu1 = new MenuDepartment();
+                        menu1.display(hospital);
                         break;
                     case 2:
                         System.out.println("Administrar pacientes");
-                        //displayPatients();
+                        MenuPatients menu2 = new MenuPatients();
+                        menu2.display(hospital);
                         break;
                     case 0:
                         System.out.println("Saliendo del sistema...");

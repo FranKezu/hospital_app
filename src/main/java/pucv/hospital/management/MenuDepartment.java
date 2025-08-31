@@ -14,12 +14,12 @@ public class MenuDepartment{
         do{
             try{
                 Menu.clear();
-                System.out.println("Bienvenido al sistema Hospitalario PUCV");
+                System.out.println("-- MENÚ DEPARTAMENTOS --");
                 System.out.println("1. Mostrar departamentos");
                 System.out.println("2. Agregar departamentos");
                 System.out.println("3. Eliminar departamentos");
-                System.out.println("4. Buscar paciente");
-                System.out.println("5. Agregar camas");
+                System.out.println("4. Agregar camas");
+                // 5. Mostrar camas
                 System.out.println("0. Volver atrás");
                 System.out.println("\nIngrese una opción: ");
                 option = Integer.parseInt(input.readLine());
@@ -34,9 +34,9 @@ public class MenuDepartment{
                         removeDepartment(hospital);
                         break;
                     case 4:
-                        findPatient(hospital);
-                    case 5:
                         addBeds(hospital);
+                    case 5:
+                        //showBeds(hospital)
                     case 0:
                         System.out.println("Volviendo atrás...");
                         break;
@@ -56,13 +56,13 @@ public class MenuDepartment{
         Map<String, Department> departments = hospital.getDepartments();
         departments.forEach((key, value) -> {
             Department d = (Department) value;
-            System.out.println("\n┌─────────────────────────────────────┐");
-            System.out.printf("│ DEPARTAMENTO: %-23s│\n", d.getName());
-            System.out.println("├─────────────────────────────────────┤");
-            System.out.printf("│ Camas totales: %-22d│\n", d.getBeds().size());
-            System.out.printf("│ Camas ocupadas: %-21d│\n", d.getOccupiedBeds());
-            System.out.printf("│ Camas libres: %-24d│\n", d.getAvailableBeds());
-            System.out.println("└─────────────────────────────────────┘");
+            System.out.println("\n==========================================");
+            System.out.println(" DEPARTAMENTO: " + d.getName());
+            System.out.println("==========================================");
+            System.out.println(" Camas totales: " + d.getBeds().size());
+            System.out.println(" Camas ocupadas: " + d.getOccupiedBeds());
+            System.out.println(" Camas libres: " + d.getAvailableBeds());
+            System.out.println("==========================================");
         });
         Menu.pause();
     }
@@ -91,22 +91,6 @@ public class MenuDepartment{
         Menu.pause();
     }
 
-    public void findPatient(Hospital hospital) throws IOException{
-        System.out.println("Ingrese RUT sin guión, o nombre y apellido del paciente: ");
-        String name = input.readLine();
-        Patient p;
-        if(name.matches("\\d+"))
-            p = hospital.findPatient(Integer.parseInt(name));
-        else
-            p = hospital.findPatient(name);
-        
-        if(p == null){
-            System.out.println("Paciente no encontrado!");
-        }
-        else p.showPatient();
-        Menu.pause();
-    }
-
     public void addBeds(Hospital hospital) throws IOException{
         System.out.println("Ingrese el departamento al que desea agregar camas: ");
         String name = input.readLine();
@@ -114,6 +98,8 @@ public class MenuDepartment{
         String aux = input.readLine();
         Department d = hospital.getDepartments().get(name);
         if(aux.equals("")) d.addBeds();
-        else d.addBeds(Integer.parseInt(aux)); 
+        else d.addBeds(Integer.parseInt(aux));
+        System.out.println("Se han aumentado las camas del departamento '" + name + "' exitosamente.");
+        Menu.pause();
     }
 }

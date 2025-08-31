@@ -8,9 +8,11 @@ public class Patient{
     private String entryDate;
     private String dischargeDate;
     private String address;
+    private String department;
     private int rut;
+    private int bedID;
 
-    public Patient(String name, int age, String gender, Severity level, String entryDate, String dischargeDate, String address, int rut){
+    public Patient(String name, int age, String gender, Severity level, String entryDate, String dischargeDate, String address, int rut, int bedID, String department){
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -18,7 +20,9 @@ public class Patient{
         this.entryDate = entryDate;
         this.dischargeDate = dischargeDate;
         this.address = address;
+        this.department = department;
         this.rut = rut;
+        this.bedID = bedID;
     }
 
     public String getName(){
@@ -69,20 +73,29 @@ public class Patient{
     public void setRut(int rut){
         this.rut = rut;
     }
+    public void setBedID(int bedID){
+        this.bedID = bedID;
+    }
+    public int getBedID(){
+        return bedID;
+    }
 
     public void showPatient(){
-        System.out.println("\n┌─────────────────────────────────────┐");
-        System.out.println("│           Información del paciente           │");
-        System.out.println("├─────────────────────────────────────┤");
-        System.out.printf("│ Paciente: %-25s │%n", name);
-        System.out.printf("│ RUT: %-30s │%n", rut);
-        System.out.printf("│ Edad: %-29d │%n", age);
-        System.out.printf("│ Género: %-27s │%n", gender);
-        System.out.printf("│ Estado: %-27s │%n", level);
-        System.out.printf("│ Fecha de ingreso: %-17s │%n", entryDate);
-        System.out.printf("│ Fecha de alta: %-20s │%n", dischargeDate);
-        System.out.printf("│ Dirección: %-24s │%n", address);
-        System.out.println("└─────────────────────────────────────┘");
+        System.out.println("\n==========================================");
+        System.out.println("           FICHA DEL PACIENTE           ");
+        System.out.println("==========================================");
+        System.out.println(" Paciente: " + name);
+        System.out.println(" RUT: " + rut);
+        System.out.println(" Edad: " + age + " años");
+        System.out.println(" Género: " + gender);
+        System.out.println(" Estado: " + level);
+        System.out.println(" Fecha de ingreso: " + entryDate);
+        System.out.println(" Fecha de alta: " + 
+            ((dischargeDate == null) ? "Sin fecha de alta" : dischargeDate));
+        System.out.println(" Dirección: " + address);
+        System.out.println(" N° de Cama: " + bedID);
+        System.out.println(" Departamento: " + department);
+        System.out.println("==========================================");
     }
 
 }

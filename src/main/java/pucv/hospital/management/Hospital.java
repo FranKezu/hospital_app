@@ -1,6 +1,7 @@
 package pucv.hospital.management;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Hospital {
     private String name;
@@ -19,23 +20,18 @@ public class Hospital {
     public void setName(String name){
         this.name = name;
     }
-
     public String getLocation(){
         return location;
     }
-
     public void setLocation(String location){
         this.location = location;
     }
-
     public Map<String, Department> getDepartments(){
         return departments;
     }
-
     public void addDepartment(Department area){
         departments.put(area.getName(), area);
     }
-
     public void removeDepartments(String key){
         departments.remove(key);
     }

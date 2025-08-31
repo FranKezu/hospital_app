@@ -1,22 +1,31 @@
 package pucv.hospital.management;
 
 public class Bed {
+    private int id;
     private Boolean available;
     private Patient occupant;
     private Department department;
     
-    public Bed(Boolean available, Patient occupant, Department department){
+    public Bed(Boolean available, Patient occupant, Department department, int id){
         this.available = available;
         this.occupant = occupant;
         this.department = department;
+        this.id = id;
     }
 
-    public Bed(Department department){
+    public Bed(Department department, int id){
         available = true;
         occupant = null;
         this.department = department;
+        this.id = id;
     }
 
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
     public Boolean getAvailable(){
         return available;
     }
@@ -32,6 +41,7 @@ public class Bed {
 
     public void assignPatient(Patient patient){
         if (available){
+            patient.setBedID(id);
             this.occupant = patient;
             this.available = false;
             department.setAvailableBeds(department.getAvailableBeds() - 1);

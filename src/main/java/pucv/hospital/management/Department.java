@@ -1,5 +1,6 @@
 package pucv.hospital.management;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Department{
     private String name;
@@ -38,25 +39,6 @@ public class Department{
     public void setDescription(String description){
         this.description = description;
     }
-
-    public void addBeds(int quantity){
-        int actualID = beds.size();
-        for(int k = actualID ; k < (quantity + actualID); k++){
-            Bed bed = new Bed(this);
-            beds.put(k + 1, bed);
-        }
-        availableBeds += quantity;
-    }
-
-    public void addBeds(){
-        int actualID = beds.size();
-        for(int k = actualID ; k < (10 + actualID); k++){
-            Bed bed = new Bed(this);
-            beds.put(k + 1, bed);
-        }
-        availableBeds += 10;
-    }
-
     public Map<Integer,Bed> getBeds(){
         return beds;
     }
@@ -77,24 +59,42 @@ public class Department{
         this.occupiedBeds = occupatedBeds;
     }
 
+    public void addBeds(int quantity){
+        int actualID = beds.size();
+        for(int k = actualID ; k < (quantity + actualID); k++){
+            Bed bed = new Bed(this, k + 1);
+            beds.put(k + 1, bed);
+        }
+        availableBeds += quantity;
+    }
+
+    public void addBeds(){
+        int actualID = beds.size();
+        for(int k = actualID ; k < (10 + actualID); k++){
+            Bed bed = new Bed(this, k + 1);
+            beds.put(k + 1, bed);
+        }
+        availableBeds += 10;
+    }
+
     public void showBeds(){
         beds.forEach((key,value) ->{
             Bed b = (Bed) value;
             if(!b.getAvailable()){
                 Patient p = b.getOccupant();
-                System.out.println("\n┌─────────────────────────────────────┐");
-                System.out.println("│ CAMA #" + key + " - OCUPADA             │");
-                System.out.println("├─────────────────────────────────────┤");
-                System.out.println("│ Paciente: " + p.getName() + "         │");
-                System.out.println("│ RUT: " + p.getRut() + "               │");
-                System.out.println("│ Edad: " + p.getAge() + "              │");
-                System.out.println("│ Nivel: " + p.getLevel() + "           │");
-                System.out.println("└─────────────────────────────────────┘");
+                System.out.println("\n==========================================");
+                System.out.println(" CAMA #" + key + " - OCUPADA");
+                System.out.println("==========================================");
+                System.out.println(" Paciente: " + p.getName());
+                System.out.println(" RUT: " + p.getRut());
+                System.out.println(" Edad: " + p.getAge() + " años");
+                System.out.println(" Nivel: " + p.getLevel());
+                System.out.println("==========================================");
             }
             else{
-                System.out.println("\n┌─────────────────────────────────────┐");
-                System.out.println("│ CAMA #" + key + " - DISPONIBLE        │");
-                System.out.println("└─────────────────────────────────────┘");
+                System.out.println("\n==========================================");
+                System.out.println(" CAMA #" + key + " - DISPONIBLE");
+                System.out.println("==========================================");
             }
         });
     }

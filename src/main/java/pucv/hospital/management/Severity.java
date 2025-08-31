@@ -1,11 +1,11 @@
 package pucv.hospital.management;
 
 public enum Severity {
-    Critical(5),
-    Severe(4),
-    Moderate(3),
-    Mild(2),
-    Minimal(1);
+    Crítico(5),
+    Severo(4),
+    Moderado(3),
+    Medio(2),
+    Mínimo(1);
     
     private final int level;
 

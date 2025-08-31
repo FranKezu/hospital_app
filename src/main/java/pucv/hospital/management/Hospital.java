@@ -28,7 +28,38 @@ public class Hospital {
         this.location = location;
     }
 
+    public Map<String, Department> getDepartments(){
+        return departments;
+    }
+
     public void addDepartment(Department area){
         departments.put(area.getName(), area);
     }
+
+    public void removeDepartments(String key){
+        departments.remove(key);
+    }
+
+    public Patient findPatient(int rut){
+        for (Department department : departments.values()){
+            for (Bed bed : department.getBeds().values()){
+                if (bed.getOccupant() != null && bed.getOccupant().getRut() == rut){
+                    return bed.getOccupant();
+                }
+            }
+        }
+        return null;
+    }
+
+    public Patient findPatient(String name){
+        for (Department department : departments.values()){
+            for (Bed bed : department.getBeds().values()){
+                if (bed.getOccupant() != null && bed.getOccupant().getName().equals(name)){
+                    return bed.getOccupant();
+                }
+            }
+        }
+        return null;
+    }
+
 }

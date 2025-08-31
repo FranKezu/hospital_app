@@ -1,6 +1,5 @@
 package pucv.hospital.management;
 
-
 public class Patient{
     private String name;
     private int age;
@@ -9,9 +8,9 @@ public class Patient{
     private String entryDate;
     private String dischargeDate;
     private String address;
-    private String rut;
+    private int rut;
 
-    public Patient(String name, int age, String gender, Severity level, String entryDate, String dischargeDate, String address,String rut){
+    public Patient(String name, int age, String gender, Severity level, String entryDate, String dischargeDate, String address, int rut){
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -64,10 +63,10 @@ public class Patient{
     public void setAddress(String address){
         this.address = address;
     }
-    public String getRut(){
+    public int getRut(){
         return rut;
     }
-    public void setRut(String rut){
+    public void setRut(int rut){
         this.rut = rut;
     }
 

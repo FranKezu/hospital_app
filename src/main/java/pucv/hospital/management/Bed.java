@@ -3,15 +3,18 @@ package pucv.hospital.management;
 public class Bed {
     private Boolean available;
     private Patient occupant;
+    private Department department;
     
-    public Bed (Boolean available, Patient occupant){
+    public Bed(Boolean available, Patient occupant, Department department){
         this.available = available;
         this.occupant = occupant;
+        this.department = department;
     }
 
-    public Bed (){
-        this.available = false;
-        this.occupant = null;
+    public Bed(Department department){
+        available = true;
+        occupant = null;
+        this.department = department;
     }
 
     public Boolean getAvailable(){
@@ -31,15 +34,19 @@ public class Bed {
         if (available){
             this.occupant = patient;
             this.available = false;
+            department.setAvailableBeds(department.getAvailableBeds() - 1);
+            department.setOccupiedBeds(department.getOccupiedBeds() + 1);
         } else {
             System.out.println("Cama no disponible.");
         }
     }
 
     public void discharge(Patient patient){
-        if (available){
-            available = false;
+        if (!available){
+            available = true;
             occupant = null;
+            department.setAvailableBeds(department.getAvailableBeds() + 1);
+            department.setOccupiedBeds(department.getOccupiedBeds() - 1);
         }
     }
 }

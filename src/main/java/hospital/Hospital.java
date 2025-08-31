@@ -1,4 +1,4 @@
-package pucv.hospital.management;
+package hospital;
 
 import java.util.Map;
 import java.util.HashMap;

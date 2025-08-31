@@ -1,4 +1,4 @@
-package pucv.hospital.management;
+package hospital;
 
 import java.io.BufferedReader;
 import java.io.IOException;

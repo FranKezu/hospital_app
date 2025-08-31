@@ -1,4 +1,4 @@
-package pucv.hospital.management;
+package hospital;
 
 public class Bed {
     private int id;

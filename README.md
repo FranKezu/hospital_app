@@ -34,7 +34,7 @@ Manejo de sistema de salud: Gestión de hospital, asignación de camas a pacient
 
 1. **📥 Clonar el repositorio**
    ```bash
-   git clone https://github.com/FranKezu/hospital_app.git
+   https://github.com/FranKezu/hospital_app.git
    cd hospital_app
    ```
 

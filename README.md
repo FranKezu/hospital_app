@@ -23,4 +23,33 @@ Manejo de sistema de salud: Gestión de hospital, asignación de camas a pacient
 - **🛏️ Bed**: Estado de ocupación
 - **⚠️ Severity**: Niveles de gravedad (Mínimo, Medio, Moderado, Crítico)
 
-Navegación por menús interactivos.
+## 🚀 Instrucciones de Ejecución
+
+### 📋 Prerrequisitos
+
+- **☕ Java 11** o superior
+- **🔧 Maven 3.6** o superior
+
+### ⚙️ Instalación y Ejecución
+
+1. **📥 Clonar el repositorio**
+   ```bash
+   git clone https://github.com/FranKezu/hospital_app.git
+   cd hospital_app
+   ```
+
+2. **🔨 Compilar el proyecto**
+   ```bash
+   mvn clean compile
+   ```
+
+3. **🏃‍♂️ Ejecutar la aplicación**
+   ```bash
+   mvn exec:java
+   ```
+
+   O alternativamente:
+   ```bash
+   mvn clean package
+   java -jar target/hospital_app-1.0-SNAPSHOT.jar
+   ```

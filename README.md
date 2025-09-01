@@ -25,16 +25,15 @@ Manejo de sistema de salud: Gestión de hospital, asignación de camas a pacient
 
 ## 🚀 Instrucciones de Ejecución
 
-### 📋 Prerrequisitos
-
-- **☕ Java 11** o superior
-- **🔧 Maven 3.6** o superior
+- **☕ JDK11** 
+- **🔧 Maven 3.6**
+- **🖥️ NetBeans IDE** (versión 21 o inferior)
 
 ### ⚙️ Instalación y Ejecución
 
 1. **📥 Clonar el repositorio**
    ```bash
-   https://github.com/FranKezu/hospital_app.git
+   git clone https://github.com/FranKezu/hospital_app.git
    cd hospital_app
    ```
 
@@ -53,3 +52,14 @@ Manejo de sistema de salud: Gestión de hospital, asignación de camas a pacient
    mvn clean package
    java -jar target/hospital_app-1.0-SNAPSHOT.jar
    ```
+
+## 🖥️ Compilar con NetBeans
+
+1. Abre NetBeans.
+2. Ve a Team → Git → Clone...
+3. En Repository URL coloca:
+   ```
+   https://github.com/FranKezu/hospital_app.git
+   ```
+4. Una vez abierto el proyecto en NetBeans, haz clic derecho sobre el proyecto.
+5. Selecciona **Run** o presiona F6 para ejecutar la aplicación.

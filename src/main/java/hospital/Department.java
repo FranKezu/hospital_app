@@ -1,6 +1,7 @@
 package hospital;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Department{
@@ -40,14 +41,18 @@ public class Department{
     public void setDescription(String description){
         this.description = description;
     }
-    public Map<Integer,Bed> getBeds(){
-        return beds;
+    public int getBedsSize(){
+        return beds.size();
     }
-
+    public Bed getBed(int key){
+        return beds.get(key);
+    }
+    public ArrayList<Bed> getBedsList(){
+        return new ArrayList<Bed>(beds.values());
+    }
     public int getAvailableBeds(){
         return availableBeds;
     }
-
     public void setAvailableBeds(int availableBeds){
         this.availableBeds = availableBeds;
     }

@@ -3,7 +3,7 @@ package hospital;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MenuPatients{
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -50,22 +50,24 @@ public class MenuPatients{
     }
 
     public void showPatients(Hospital hospital) throws IOException{
-        Map<String, Department> departments = hospital.getDepartments();
-        departments.forEach((key1, d) -> {
+        ArrayList<Department> departments = hospital.getDepartmentsList();
+
+        for (Department d : departments){
             System.out.println("\n==========================================");
             System.out.println(" DEPARTAMENTO: " + d.getName());
             System.out.println("==========================================");
-            d.getBeds().forEach((key2, b) ->{
-                if(!b.getAvailable()){
-                    Patient p = b.getOccupant();
+            ArrayList<Bed> beds = d.getBedsList();
+            for(Bed bed : beds){
+                if(!bed.getAvailable()){
+                    Patient p = bed.getOccupant();
                     System.out.println(" Nombre: " + p.getName());
                     System.out.println(" RUT: " + p.getRut());
-                    System.out.println(" N° de Cama: " + key2);
+                    System.out.println(" N° de Cama: " + bed.getId());
                     System.out.println("------------------------------------------");
                 }
-            });
+            };
             System.out.println("==========================================");
-        });
+        }
         Menu.pause();
     }
 
@@ -140,18 +142,18 @@ public class MenuPatients{
         int rut = Integer.parseInt(input.readLine());
         
         System.out.println("\nDepartamentos disponibles:");
-        Map<String, Department> departments = hospital.getDepartments();
-        departments.forEach((key, dept) -> {
-            System.out.println("- " + key + " (Camas libres: " + dept.getAvailableBeds() + ")");
-        });
+        ArrayList<Department> departments = hospital.getDepartmentsList();
+        for(Department d : departments){
+            System.out.println("- " + d.getName() + " (Camas libres: " + d.getAvailableBeds() + ")");
+        };
         
         // FALTA AGREGAR VALIDACIÓN
         System.out.print("Seleccione departamento (escribir exactamente): ");
         String dName = input.readLine();
         
-        Department department = departments.get(dName);
+        ArrayList<Bed> beds = hospital.getDepartment(dName).getBedsList();
         Bed aux = null;
-        for(Bed bed : department.getBeds().values()){
+        for(Bed bed : beds){
             if(bed.getAvailable()){
                 aux = bed;
                 break;

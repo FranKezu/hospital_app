@@ -3,7 +3,7 @@ package hospital;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MenuDepartment{
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -53,17 +53,17 @@ public class MenuDepartment{
     }
 
     public void showDepartaments(Hospital hospital) throws IOException{
-        Map<String, Department> departments = hospital.getDepartments();
-        departments.forEach((key, value) -> {
-            Department d = (Department) value;
+        ArrayList<Department> departments = hospital.getDepartmentsList();
+    
+        for (Department d : departments) {
             System.out.println("\n==========================================");
             System.out.println(" DEPARTAMENTO: " + d.getName());
             System.out.println("==========================================");
-            System.out.println(" Camas totales: " + d.getBeds().size());
+            System.out.println(" Camas totales: " + d.getBedsSize());
             System.out.println(" Camas ocupadas: " + d.getOccupiedBeds());
             System.out.println(" Camas libres: " + d.getAvailableBeds());
             System.out.println("==========================================");
-        });
+        }
         Menu.pause();
     }
 
@@ -96,7 +96,7 @@ public class MenuDepartment{
         String name = input.readLine();
         System.out.println("Ingrese la cantidad de camas (por defecto 10): ");
         String aux = input.readLine();
-        Department d = hospital.getDepartments().get(name);
+        Department d = hospital.getDepartment(name);
         if(aux.equals("")) d.addBeds();
         else d.addBeds(Integer.parseInt(aux));
         System.out.println("Se han aumentado las camas del departamento '" + name + "' exitosamente.");

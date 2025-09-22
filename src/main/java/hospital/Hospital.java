@@ -1,6 +1,7 @@
 package hospital;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Hospital {
@@ -26,8 +27,14 @@ public class Hospital {
     public void setLocation(String location){
         this.location = location;
     }
-    public Map<String, Department> getDepartments(){
-        return departments;
+    public int getDepartmentsSize() {
+        return departments.size();
+    }
+    public Department getDepartment(String key) {
+        return departments.get(key);
+    }
+    public ArrayList<Department> getDepartmentsList() {
+        return new ArrayList<Department>(departments.values());
     }
     public void addDepartment(Department area){
         departments.put(area.getName(), area);
@@ -38,7 +45,8 @@ public class Hospital {
 
     public Patient findPatient(int rut){
         for (Department department : departments.values()){
-            for (Bed bed : department.getBeds().values()){
+            ArrayList<Bed> beds = department.getBedsList();
+            for (Bed bed : beds){
                 if (bed.getOccupant() != null && bed.getOccupant().getRut() == rut){
                     return bed.getOccupant();
                 }
@@ -49,7 +57,8 @@ public class Hospital {
 
     public Patient findPatient(String name){
         for (Department department : departments.values()){
-            for (Bed bed : department.getBeds().values()){
+            ArrayList<Bed> beds = department.getBedsList();
+            for (Bed bed : beds){
                 if (bed.getOccupant() != null && bed.getOccupant().getName().equals(name)){
                     return bed.getOccupant();
                 }

@@ -26,7 +26,7 @@ public class Menu {
             try {
                 clear();
                 System.out.println("Bienvenido al sistema Hospitalario PUCV");
-                System.out.println("1. Administrar departamntos");
+                System.out.println("1. Administrar departamentos");
                 System.out.println("2. Administrar pacientes");
                 System.out.println("0. Salir");
                 System.out.println("\nIngrese una opción: ");
@@ -34,7 +34,7 @@ public class Menu {
                 
                 switch (option){
                     case 1:
-                        System.out.println("Administrar departamntos");
+                        System.out.println("Administrar departamentos");
                         MenuDepartment menu1 = new MenuDepartment();
                         menu1.display(hospital);
                         break;
@@ -45,6 +45,7 @@ public class Menu {
                         break;
                     case 0:
                         System.out.println("Saliendo del sistema...");
+                        hospital.closeDatabase();
                         break;
                     default:
                         System.out.println("Opción no válida. Intente de nuevo.");

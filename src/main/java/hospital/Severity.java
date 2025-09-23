@@ -1,11 +1,11 @@
 package hospital;
 
 public enum Severity {
-    Crítico(5),
+    Critico(5),
     Severo(4),
     Moderado(3),
     Medio(2),
-    Mínimo(1);
+    Minimo(1);
     
     private final int level;
 

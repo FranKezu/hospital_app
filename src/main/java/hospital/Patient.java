@@ -79,6 +79,13 @@ public class Patient{
     public int getBedID(){
         return bedID;
     }
+    public String getDepartment(){
+        return department;
+    }
+    public void setDepartment(String department){
+        this.department = department;
+    }
+
 
     public void showPatient(){
         System.out.println("\n==========================================");

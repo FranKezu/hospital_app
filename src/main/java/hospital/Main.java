@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws IOException{
         Hospital hospital = new Hospital("Hospital PUCV", "Av. Brasil 2147, Valparaíso");
         
-        // Crear departamentos de prueba
+        /*
         Department uci = new Department("UCI", "Unidad de Cuidados Intensivos", 10);
         Department pediatria = new Department("Pediatria", "Departamento de Pediatria", 15);
         Department cardiologia = new Department("Cardiologia", "Departamento de Cardiologia", 12);
@@ -26,7 +26,6 @@ public class Main {
         Patient paciente3 = new Patient("Carlos Lopez", 32, "M", Severity.Medio, "2024-01-17", "", "Santiago 789", 34567890, 0, "Pediatria");
         Patient paciente4 = new Patient("Ana Martinez", 28, "F", Severity.Moderado, "2024-01-18", "", "Quilpue 321", 45678901, 0, "Cardiologia");
         Patient paciente5 = new Patient("Luis Garcia", 55, "M", Severity.Crítico, "2024-01-19", "", "Concepcion 654", 56789012, 0, "Neurologia");
-        2
         Patient paciente6 = new Patient("Claudio Cubillos", 30, "M", Severity.Mínimo, "2025-08-31", "", "PUCV", 67890123, 0, "Oncologia");
         
         // Asignar pacientes a camas
@@ -36,7 +35,8 @@ public class Main {
         cardiologia.getBed(1).assignPatient(paciente4);
         neurologia.getBed(1).assignPatient(paciente5);
         oncologia.getBed(1).assignPatient(paciente6);
-        
+        */
+
         Menu menu = new Menu();
         menu.display(hospital); 
     }

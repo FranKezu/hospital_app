@@ -1,15 +1,12 @@
 package hospital;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MenuDepartment{
-    BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+public class MenuDepartment extends Menu{
 
+    @Override
     public void display(Hospital hospital) throws IOException{
-
         int option;
         do{
             try{
@@ -42,12 +39,12 @@ public class MenuDepartment{
                         break;
                     default:
                         System.out.println("Opción no válida. Intente de nuevo.");
-                        Menu.pause();
+                        pause();
                 }
             } catch (NumberFormatException e){
                 System.out.println("Error: Debe ingresar un número válido.");
                 option = -1;
-                Menu.pause();
+                pause();
             }
         } while(option != 0);
     }
@@ -64,7 +61,7 @@ public class MenuDepartment{
             System.out.println(" Camas libres: " + d.getAvailableBeds());
             System.out.println("==========================================");
         }
-        Menu.pause();
+        pause();
     }
 
     public void addDepartment(Hospital hospital) throws IOException{
@@ -79,7 +76,7 @@ public class MenuDepartment{
 
         System.out.println("Departamento " + name + " añadido correctamente.");
         System.out.println("Descripción " + description);
-        Menu.pause();
+        pause();
     }
 
     public void removeDepartment(Hospital hospital) throws IOException{
@@ -88,7 +85,7 @@ public class MenuDepartment{
 
         hospital.removeDepartments(name);
         System.out.println("Departamento " + name + " eliminado correctamente.");
-        Menu.pause();
+        pause();
     }
 
     public void addBeds(Hospital hospital) throws IOException{
@@ -100,6 +97,6 @@ public class MenuDepartment{
         if(aux.equals("")) d.addBeds();
         else d.addBeds(Integer.parseInt(aux));
         System.out.println("Se han aumentado las camas del departamento '" + name + "' exitosamente.");
-        Menu.pause();
+        pause();
     }
 }

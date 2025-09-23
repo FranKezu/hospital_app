@@ -1,15 +1,12 @@
 package hospital;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MenuPatients{
-    BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+public class MenuPatients extends Menu{
 
+    @Override
     public void display(Hospital hospital) throws IOException{
-
         int option;
         do{
             try{
@@ -39,12 +36,12 @@ public class MenuPatients{
                         break;
                     default:
                         System.out.println("Opción no válida. Intente de nuevo.");
-                        Menu.pause();
+                        pause();
                 }
             } catch (NumberFormatException e){
                 System.out.println("Error: Debe ingresar un número válido.");
                 option = -1;
-                Menu.pause();
+                pause();
             }
         } while(option != 0);
     }
@@ -68,7 +65,7 @@ public class MenuPatients{
             };
             System.out.println("==========================================");
         }
-        Menu.pause();
+        pause();
     }
 
     public void findPatient(Hospital hospital) throws IOException{
@@ -84,7 +81,7 @@ public class MenuPatients{
             System.out.println("Paciente no encontrado!");
         }
         else p.showPatient();
-        Menu.pause();
+        pause();
     }
 
     public void addPatient(Hospital hospital) throws IOException{
@@ -113,7 +110,7 @@ public class MenuPatients{
         Severity severity;
         switch(severityOption){
             case 1: 
-                severity = Severity.Mínimo;
+                severity = Severity.Minimo;
                 break;
             case 2: 
                 severity = Severity.Medio;
@@ -125,7 +122,7 @@ public class MenuPatients{
                 severity = Severity.Severo;
                 break;
             case 5: 
-                severity = Severity.Crítico;
+                severity = Severity.Critico;
                 break;
             default:
                 severity = Severity.Medio;
@@ -168,6 +165,6 @@ public class MenuPatients{
             System.out.println("No hay camas disponibles.");
         }
         
-        Menu.pause();
+        pause();
     }
 }

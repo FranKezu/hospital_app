@@ -147,8 +147,9 @@ public class MenuPatients extends Menu{
         // FALTA AGREGAR VALIDACIÓN
         System.out.print("Seleccione departamento (escribir exactamente): ");
         String dName = input.readLine();
+        Department d = hospital.getDepartment(dName);
         
-        ArrayList<Bed> beds = hospital.getDepartment(dName).getBedsList();
+        ArrayList<Bed> beds = d.getBedsList();
         Bed aux = null;
         for(Bed bed : beds){
             if(bed.getAvailable()){
@@ -159,7 +160,7 @@ public class MenuPatients extends Menu{
         
         if(aux != null){
             Patient p = new Patient(name, age, gender, severity, entryDate, null, address, rut, aux.getId(), dName);
-            aux.assignPatient(p);
+            d.assignPatient(p);
             System.out.println("Paciente " + name + " ingresado exitosamente!");
         } else {
             System.out.println("No hay camas disponibles.");

@@ -104,4 +104,34 @@ public class Department{
             }
         });
     }
+
+    public void assignPatient(Patient patient){
+        beds.forEach((key,value) ->{
+            Bed b = value;
+            if (b.getAvailable()){
+                b.getOccupant().setBedID(b.getId());
+                b.setOccupant(patient);
+                b.setAvailable(false);
+                availableBeds--;
+                occupiedBeds++;
+            } else {
+                System.out.println("Cama no disponible.");
+            }
+        });
+    }
+
+    public Patient discharge(int id){
+        Bed b = beds.get(id);
+        if (b != null && b.getAvailable()){
+            Patient p = b.getOccupant();
+            b.setOccupant(null);
+            b.setAvailable(true);
+            availableBeds++;
+            occupiedBeds--;
+            return p;
+        } else {
+            System.out.println("No se encontró el paciente.");
+            return null;
+        }
+    }
 }

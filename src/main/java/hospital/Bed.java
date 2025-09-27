@@ -2,18 +2,18 @@ package hospital;
 
 public class Bed {
     private int id;
-    private Boolean available;
+    private boolean available;
     private Patient occupant;
     
-    public Bed(Boolean available, Patient occupant, Department department, int id){
+    public Bed(boolean available, Patient occupant, int id){
         this.available = available;
         this.occupant = occupant;
         this.id = id;
     }
 
-    public Bed(Department department, int id){
-        available = true;
-        occupant = null;
+    public Bed(int id){
+        this.available = true;
+        this.occupant = null;
         this.id = id;
     }
 
@@ -23,16 +23,23 @@ public class Bed {
     public void setId(int id){
         this.id = id;
     }
-    public Boolean getAvailable(){
+    public boolean getAvailable(){
         return available;
     }
-    public void setAvailable(Boolean available){
+    public void setAvailable(boolean available){
         this.available = available; 
     }
     public Patient getOccupant(){
         return occupant;
     }
-    public void setOccupant(Patient occupant){
-        this.occupant = occupant;
+
+    public void setOccupant(Patient patient){
+        this.occupant = patient;
+        this.available = (patient == null);
+    }
+
+    public void dischargePatient(){
+        this.occupant = null;
+        this.available = true;
     }
 }

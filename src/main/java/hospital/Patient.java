@@ -1,22 +1,27 @@
 package hospital;
 
 public class Patient{
+    // Información personal
     private String name;
+    private int rut;
     private int age;
     private String gender;
-    private Severity level;
+    private String address;
+
+    // Información médica
+    private Severity severity;
     private String entryDate;
     private String dischargeDate;
-    private String address;
+
+    // Información hospitalaria
     private String department;
-    private int rut;
     private int bedID;
 
-    public Patient(String name, int age, String gender, Severity level, String entryDate, String dischargeDate, String address, int rut, int bedID, String department){
+    public Patient(String name, int age, String gender, Severity severity, String entryDate, String dischargeDate, String address, int rut, int bedID, String department){
         this.name = name;
         this.age = age;
         this.gender = gender;
-        this.level = level;
+        this.severity = severity;
         this.entryDate = entryDate;
         this.dischargeDate = dischargeDate;
         this.address = address;
@@ -43,11 +48,9 @@ public class Patient{
     public void setGender(String gender){
         this.gender = gender;
     }
-    public Severity getLevel(){
-        return level;
-    }
-    public void setLevel(Severity level){
-        this.level = level;
+    public Severity getSeverity() { return severity; }
+    public void setSeverity(Severity severity){
+        this.severity = severity;
     }
     public String getEntryDate(){
         return entryDate;
@@ -95,7 +98,7 @@ public class Patient{
         System.out.println(" RUT: " + rut);
         System.out.println(" Edad: " + age + " años");
         System.out.println(" Género: " + gender);
-        System.out.println(" Estado: " + level);
+        System.out.println(" Estado: " + severity);
         System.out.println(" Fecha de ingreso: " + entryDate);
         System.out.println(" Fecha de alta: " + 
             ((dischargeDate == null) ? "Sin fecha de alta" : dischargeDate));

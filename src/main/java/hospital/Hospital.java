@@ -8,14 +8,12 @@ public class Hospital {
     private String name;
     private String location;
     private Map<String, Department> departments;
-    private DatabaseManager dbManager;
+    //private DatabaseManager dbManager;
 
     public Hospital(String name, String location){
         this.name = name;
         this.location = location;
         departments = new HashMap<>();
-        this.dbManager = new DatabaseManager();
-        loadDataFromDatabase();
     }
 
     public String getName(){
@@ -41,16 +39,10 @@ public class Hospital {
     }
     public void addDepartment(Department area){
         departments.put(area.getName(), area);
-        dbManager.saveDepartment(area); // Guardar en BD
-        
-        // Guardar las camas del departamento
-        for (Bed bed : area.getBedsList()) {
-            dbManager.saveBed(bed, area.getName());
-        }
     }
     public void removeDepartments(String key){
         departments.remove(key);
-        dbManager.deleteDepartment(key); // Eliminar de BD
+        //dbManager.deleteDepartment(key); // Eliminar de BD
     }
 
     public Patient findPatient(int rut){
@@ -75,22 +67,6 @@ public class Hospital {
             }
         }
         return null;
-    }
-    
-    // Métodos para DatabaseManager
-    private void loadDataFromDatabase() {
-        ArrayList<Department> loadedDepartments = dbManager.loadDepartments();
-        for (Department dept : loadedDepartments) {
-            departments.put(dept.getName(), dept);
-        }
-    }
-    
-    public DatabaseManager getDbManager() {
-        return dbManager;
-    }
-    
-    public void closeDatabase() {
-        dbManager.closeConnection();
     }
 
 }

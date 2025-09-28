@@ -84,9 +84,10 @@ public class Menu {
             String menu = "Bienvenido al sistema Hospitalario PUCV\n"
                     + "1. Administrar departamentos\n"
                     + "2. Administrar pacientes\n"
+                    + "3. Generar reporte de pacientes\n"
                     + "0. Salir\n";
 
-            option = validateNum(menu + "\nIngrese una opción:", 0, 2);
+            option = validateNum(menu + "\nIngrese una opción:", 0, 3);
 
             switch (option) {
                 case 1:
@@ -97,6 +98,12 @@ public class Menu {
                     if (!validateDepartmentExists(hospital)) break;
                     MenuPatients menu2 = new MenuPatients();
                     menu2.display(hospital);
+                    break;
+                case 3:
+                    if (!validateDepartmentExists(hospital)) break;
+                    ReportGenerator reportGenerator = new ReportGenerator();
+                    reportGenerator.generatePatientReport(hospital);
+                    showMessage("Reporte generado exitosamente en reporte.txt");
                     break;
                 case 0:
                     showMessage("Saliendo del sistema...");

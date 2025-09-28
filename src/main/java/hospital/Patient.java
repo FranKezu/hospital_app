@@ -1,5 +1,7 @@
 package hospital;
 
+import javax.swing.*;
+
 public class Patient{
     // Información personal
     private String name;
@@ -89,23 +91,31 @@ public class Patient{
         this.department = department;
     }
 
+    public void showPatientGUI() {
+        StringBuilder sb = new StringBuilder();
 
-    public void showPatient(){
-        System.out.println("\n==========================================");
-        System.out.println("           FICHA DEL PACIENTE           ");
-        System.out.println("==========================================");
-        System.out.println(" Paciente: " + name);
-        System.out.println(" RUT: " + rut);
-        System.out.println(" Edad: " + age + " años");
-        System.out.println(" Género: " + gender);
-        System.out.println(" Estado: " + severity);
-        System.out.println(" Fecha de ingreso: " + entryDate);
-        System.out.println(" Fecha de alta: " + 
-            ((dischargeDate == null) ? "Sin fecha de alta" : dischargeDate));
-        System.out.println(" Dirección: " + address);
-        System.out.println(" N° de Cama: " + bedID);
-        System.out.println(" Departamento: " + department);
-        System.out.println("==========================================");
+        sb.append("\n==========================================\n")
+                .append("           FICHA DEL PACIENTE           \n")
+                .append("==========================================\n")
+                .append(" Paciente: ").append(name).append("\n")
+                .append(" RUT: ").append(rut).append("\n")
+                .append(" Edad: ").append(age).append(" años\n")
+                .append(" Género: ").append(gender).append("\n")
+                .append(" Estado: ").append(severity).append("\n")
+                .append(" Fecha de ingreso: ").append(entryDate).append("\n")
+                .append(" Fecha de alta: ").append((dischargeDate == null) ? "Sin fecha de alta" : dischargeDate).append("\n")
+                .append(" Dirección: ").append(address).append("\n")
+                .append(" N° de Cama: ").append(bedID).append("\n")
+                .append(" Departamento: ").append(department).append("\n")
+                .append("==========================================\n");
+
+        // Mostrar en JTextArea con scroll
+        JTextArea textArea = new JTextArea(sb.toString(), 20, 50); // filas y columnas ajustables
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        javax.swing.JOptionPane.showMessageDialog(null, scrollPane, "Ficha del Paciente", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
+
 
 }

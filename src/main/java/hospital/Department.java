@@ -116,7 +116,7 @@ public class Department{
         }
     }
 
-    public void showBedsGUI() {
+    public String showBedsGUI() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n--- CAMAS DEL DEPARTAMENTO: ").append(this.name).append(" ---\n")
                 .append("Total de camas: ").append(beds.size()).append("\n")
@@ -133,7 +133,7 @@ public class Department{
                 if (p != null) {
                     sb.append(" Paciente: ").append(p.getName()).append("\n")
                             .append(" RUT: ").append(p.getRut()).append("\n")
-                            .append(" Edad: ").append(p.getAge()).append(" años\n")
+                            .append(" Edad: ").append(p.getAge()).append("\n")
                             .append(" Nivel: ").append(p.getSeverity()).append("\n");
                 } else {
                     sb.append(" ERROR: Cama marcada como ocupada sin paciente\n");
@@ -144,9 +144,9 @@ public class Department{
             }
         });
 
-        javax.swing.JOptionPane.showMessageDialog(null, sb.toString(),
-                "Camas del Departamento", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        return sb.toString();
     }
+
 
 
     public void assignPatient(Patient patient){
@@ -206,7 +206,7 @@ public class Department{
         }
 
         System.out.println("Paciente " + patient.getName() + " dado de alta exitosamente\n");
-        patient.showPatient();
+        patient.showPatientGUI();
         return patient;
     }
 }

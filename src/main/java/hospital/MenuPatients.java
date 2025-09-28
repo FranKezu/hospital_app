@@ -81,8 +81,15 @@ public class MenuPatients extends Menu {
                 }
             }
         }
-        showMessage(sb.toString());
+
+        // Mostrar en JTextArea con scroll
+        JTextArea textArea = new JTextArea(sb.toString(), 25, 80); // filas y columnas ajustables
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        javax.swing.JOptionPane.showMessageDialog(null, scrollPane, "Pacientes", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     public void findPatient(Hospital hospital) throws InvalidRutException {
         String inputStr = JOptionPane.showInputDialog("Ingrese RUT sin guión ni puntos, o nombre y apellido del paciente:");
@@ -99,7 +106,7 @@ public class MenuPatients extends Menu {
         if (p == null) {
             showMessage("Paciente no encontrado!");
         } else {
-            showMessage(p.toString()); // Asumiendo que Patient tiene un método toString() que muestra info
+            p.showPatientGUI(); // <-- Usamos la nueva función para mostrar toda la info en GUI
         }
     }
 
@@ -199,6 +206,15 @@ public class MenuPatients extends Menu {
         }
 
         if (sb.length() == 0) sb.append("No hay pacientes con ese nivel de severidad.");
-        showMessage(sb.toString());
+
+        // Mostrar en JTextArea con scroll
+        JTextArea textArea = new JTextArea(sb.toString(), 20, 80); // filas y columnas ajustables
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        javax.swing.JOptionPane.showMessageDialog(null, scrollPane,
+                "Pacientes por Gravedad - Departamento " + d.getName(),
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
+
 }

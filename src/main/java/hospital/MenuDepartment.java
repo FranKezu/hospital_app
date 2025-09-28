@@ -59,7 +59,12 @@ public class MenuDepartment extends Menu {
                     .append("==========================================\n");
         }
 
-        showMessage(sb.toString());
+        // Mostrar en JTextArea con scroll
+        JTextArea textArea = new JTextArea(sb.toString(), 25, 80); // filas y columnas ajustables
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        javax.swing.JOptionPane.showMessageDialog(null, scrollPane, "Departamentos", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void addDepartment(Hospital hospital) {
@@ -116,10 +121,15 @@ public class MenuDepartment extends Menu {
                 .append("==========================================\n");
 
         for (Department department : departments) {
-            sb.append("\n--- DEPARTAMENTO: ").append(department.getName()).append(" ---\n");
-            department.showBedsGUI();
+            sb.append(department.showBedsGUI()).append("\n");
         }
 
-        showMessage(sb.toString());
+        // Mostrar en un JTextArea grande con scroll
+        JTextArea textArea = new JTextArea(sb.toString(), 25, 80); // ajusta filas y columnas
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        JOptionPane.showMessageDialog(null, scrollPane, "Camas de Departamentos", JOptionPane.INFORMATION_MESSAGE);
     }
+
 }

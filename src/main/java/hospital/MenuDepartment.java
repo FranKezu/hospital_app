@@ -1,26 +1,25 @@
 package hospital;
 
-import java.io.IOException;
+import javax.swing.*;
 import java.util.ArrayList;
 
-public class MenuDepartment extends Menu{
+public class MenuDepartment extends Menu {
 
     @Override
-    public void display(Hospital hospital) throws IOException{
+    public void display(Hospital hospital) {
         int option;
-        do{
-            super.clear();
-            System.out.println("-- MENÚ DEPARTAMENTOS --");
-            System.out.println("1. Mostrar departamentos");
-            System.out.println("2. Agregar departamentos");
-            System.out.println("3. Eliminar departamentos");
-            System.out.println("4. Agregar camas");
-            System.out.println("5. Mostrar camas");
-            System.out.println("0. Volver atrás");
+        do {
+            String menu = "-- MENÚ DEPARTAMENTOS --\n"
+                    + "1. Mostrar departamentos\n"
+                    + "2. Agregar departamentos\n"
+                    + "3. Eliminar departamentos\n"
+                    + "4. Agregar camas\n"
+                    + "5. Mostrar camas\n"
+                    + "0. Volver atrás\n";
 
-            option = super.validateNum("\nIngrese una opción: ", 0, 5);
+            option = super.validateNum(menu + "\nIngrese una opción:", 0, 5);
 
-            switch (option){
+            switch (option) {
                 case 1:
                     showDepartaments(hospital);
                     break;
@@ -37,81 +36,90 @@ public class MenuDepartment extends Menu{
                     showBeds(hospital);
                     break;
                 case 0:
-                    System.out.println("Volviendo atrás...");
+                    showMessage("Volviendo atrás...");
                     break;
             }
-        } while(option != 0);
+        } while (option != 0);
     }
 
-    public void showDepartaments(Hospital hospital) throws IOException{
-        if(!super.validateDepartmentExists(hospital)) return;
+    public void showDepartaments(Hospital hospital) {
+        if (!super.validateDepartmentExists(hospital)) return;
 
         ArrayList<Department> departments = hospital.getDepartmentsList();
+        StringBuilder sb = new StringBuilder();
 
         for (Department d : departments) {
-            System.out.println("\n==========================================");
-            System.out.println(" DEPARTAMENTO: " + d.getName());
-            System.out.println("==========================================");
-            System.out.println(" Camas totales: " + d.getBedsSize());
-            System.out.println(" Camas ocupadas: " + d.getOccupiedBeds());
-            System.out.println(" Camas libres: " + d.getAvailableBeds());
-            System.out.println("==========================================");
+            sb.append("\n==========================================\n")
+                    .append(" DEPARTAMENTO: ").append(d.getName()).append("\n")
+                    .append(" Descripción: ").append(d.getDescription()).append("\n")
+                    .append("==========================================\n")
+                    .append(" Camas totales: ").append(d.getBedsSize()).append("\n")
+                    .append(" Camas ocupadas: ").append(d.getOccupiedBeds()).append("\n")
+                    .append(" Camas libres: ").append(d.getAvailableBeds()).append("\n")
+                    .append("==========================================\n");
         }
-        super.pause();
+
+        showMessage(sb.toString());
     }
 
-    public void addDepartment(Hospital hospital) throws IOException{
-        System.out.println("Ingrese el nombre del departamento que desea agregar: ");
-        String name = super.input.readLine();
+    public void addDepartment(Hospital hospital) {
+        String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del departamento que desea agregar:");
+        if (name == null || name.trim().isEmpty()) return;
 
-        System.out.println("Ingrese la descripción del departamento: ");
-        String description = super.input.readLine();
+        String description = JOptionPane.showInputDialog(null, "Ingrese la descripción del departamento:");
+        if (description == null) description = "";
 
         Department newD = new Department(name, description);
         hospital.addDepartment(newD);
 
-        System.out.println("Departamento " + name + " añadido correctamente.");
-        System.out.println("Descripción " + description);
-        super.pause();
+        showMessage("Departamento '" + name + "' añadido correctamente.\nDescripción: " + description);
     }
 
-    public void removeDepartment(Hospital hospital) throws IOException{
-        if(!super.validateDepartmentExists(hospital)) return;
+    public void removeDepartment(Hospital hospital) {
+        if (!super.validateDepartmentExists(hospital)) return;
 
         Department d = super.validateDepartment(hospital);
+        if (d == null) return;
 
         hospital.removeDepartments(d.getName());
-        System.out.println("Departamento " + d.getName() + " eliminado correctamente.");
-        super.pause();
+        showMessage("Departamento '" + d.getName() + "' eliminado correctamente.");
     }
 
-    public void addBeds(Hospital hospital) throws IOException{
-        if(!super.validateDepartmentExists(hospital)) return;
+    public void addBeds(Hospital hospital) {
+        if (!super.validateDepartmentExists(hospital)) return;
 
         Department d = super.validateDepartment(hospital);
-        String name = super.input.readLine();
-        System.out.println("Ingrese la cantidad de camas (por defecto 10): ");
-        String aux = super.input.readLine();
-        if(aux.isEmpty()) d.addBeds();
-        else d.addBeds(Integer.parseInt(aux));
-        System.out.println("Se han aumentado las camas del departamento '" + d.getName() + "' exitosamente.");
-        super.pause();
+        if (d == null) return;
+
+        String aux = JOptionPane.showInputDialog(null, "Ingrese la cantidad de camas (por defecto 10):");
+        if (aux == null || aux.trim().isEmpty()) {
+            d.addBeds();
+        } else {
+            try {
+                d.addBeds(Integer.parseInt(aux));
+            } catch (NumberFormatException e) {
+                showMessage("Entrada inválida. No se agregaron camas.");
+                return;
+            }
+        }
+        showMessage("Se han aumentado las camas del departamento '" + d.getName() + "' exitosamente.");
     }
 
-    public void showBeds(Hospital hospital) throws IOException {
-        if(!super.validateDepartmentExists(hospital)) return;
+    public void showBeds(Hospital hospital) {
+        if (!super.validateDepartmentExists(hospital)) return;
 
         ArrayList<Department> departments = hospital.getDepartmentsList();
+        StringBuilder sb = new StringBuilder();
 
-        System.out.println("\n==========================================");
-        System.out.println("         CAMAS DE TODOS LOS DEPARTAMENTOS");
-        System.out.println("==========================================");
+        sb.append("==========================================\n")
+                .append("         CAMAS DE TODOS LOS DEPARTAMENTOS\n")
+                .append("==========================================\n");
 
         for (Department department : departments) {
-            System.out.println("\n--- DEPARTAMENTO: " + department.getName() + " ---");
-            department.showBeds(hospital);
+            sb.append("\n--- DEPARTAMENTO: ").append(department.getName()).append(" ---\n");
+            department.showBedsGUI();
         }
 
-        super.pause();
+        showMessage(sb.toString());
     }
 }

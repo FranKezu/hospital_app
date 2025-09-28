@@ -11,6 +11,7 @@ public class Department{
     private Map<Integer,Bed> beds;
     private int availableBeds;
     private int occupiedBeds;
+    private Hospital hospital; // Referencia al hospital para sincronización con BD
 
     public Department(String name, String description){
         this.name = name;
@@ -26,6 +27,11 @@ public class Department{
         beds = new HashMap<>();
         addBeds(availableBeds);
         occupiedBeds = 0;
+    }
+
+    // Método para establecer la referencia al hospital
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
     }
 
     public String getName(){
@@ -51,6 +57,24 @@ public class Department{
     public ArrayList<Bed> getBedsList(){
         return new ArrayList<Bed>(beds.values());
     }
+
+    // Método para que DatabaseManager pueda acceder a la colección directa
+    public Map<Integer, Bed> getBedsMap() {
+        return beds;
+    }
+
+    // Método para limpiar todas las camas (usado por DatabaseManager)
+    public void clearBeds() {
+        beds.clear();
+        availableBeds = 0;
+        occupiedBeds = 0;
+    }
+
+    // Método para agregar cama directamente (usado por DatabaseManager)
+    public void addBedDirect(Bed bed) {
+        beds.put(bed.getId(), bed);
+    }
+
     public int getAvailableBeds(){
         return availableBeds;
     }
@@ -73,6 +97,10 @@ public class Department{
             beds.put(k + 1, bed);
         }
         availableBeds += quantity;
+        // Sincronizar con base de datos si el hospital está configurado
+        if (hospital != null) {
+            hospital.updateDepartmentBedCounts(this.name);
+        }
     }
 
     public void addBeds(){
@@ -82,35 +110,44 @@ public class Department{
             beds.put(k + 1, bed);
         }
         availableBeds += 10;
+        // Sincronizar con base de datos si el hospital está configurado
+        if (hospital != null) {
+            hospital.updateDepartmentBedCounts(this.name);
+        }
     }
 
-    public void showBeds(Hospital hospital) {
-        System.out.println("\n--- CAMAS DEL DEPARTAMENTO: " + this.name + " ---");
-        System.out.println("Total de camas: " + beds.size());
-        System.out.println("Camas disponibles: " + availableBeds);
-        System.out.println("Camas ocupadas: " + occupiedBeds);
+    public void showBedsGUI() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n--- CAMAS DEL DEPARTAMENTO: ").append(this.name).append(" ---\n")
+                .append("Total de camas: ").append(beds.size()).append("\n")
+                .append("Camas disponibles: ").append(availableBeds).append("\n")
+                .append("Camas ocupadas: ").append(occupiedBeds).append("\n");
 
         beds.forEach((key, value) -> {
             Bed b = value;
             if (!b.getAvailable()) {
                 Patient p = b.getOccupant();
-                System.out.println("\n==========================================");
-                System.out.println(" CAMA #" + key + " - OCUPADA");
-                System.out.println("==========================================");
+                sb.append("\n==========================================\n")
+                        .append(" CAMA #").append(key).append(" - OCUPADA\n")
+                        .append("==========================================\n");
                 if (p != null) {
-                    System.out.println(" Paciente: " + p.getName());
-                    System.out.println(" RUT: " + p.getRut());
-                    System.out.println(" Edad: " + p.getAge() + " años");
-                    System.out.println(" Nivel: " + p.getSeverity());
+                    sb.append(" Paciente: ").append(p.getName()).append("\n")
+                            .append(" RUT: ").append(p.getRut()).append("\n")
+                            .append(" Edad: ").append(p.getAge()).append(" años\n")
+                            .append(" Nivel: ").append(p.getSeverity()).append("\n");
                 } else {
-                    System.out.println(" ERROR: Cama marcada como ocupada sin paciente");
+                    sb.append(" ERROR: Cama marcada como ocupada sin paciente\n");
                 }
-                System.out.println("==========================================");
+                sb.append("==========================================\n");
             } else {
-                System.out.println(" CAMA #" + key + " - DISPONIBLE");
+                sb.append(" CAMA #").append(key).append(" - DISPONIBLE\n");
             }
         });
+
+        javax.swing.JOptionPane.showMessageDialog(null, sb.toString(),
+                "Camas del Departamento", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     public void assignPatient(Patient patient){
         for (Map.Entry<Integer, Bed> entry : beds.entrySet()) {
@@ -121,6 +158,15 @@ public class Department{
                 availableBeds--;
                 occupiedBeds++;
                 System.out.println("Paciente " + patient.getName() + " asignado a la cama " + b.getId() + " exitosamente.");
+
+                // Sincronizar con base de datos
+                if (hospital != null) {
+                    // Guardar el paciente en la base de datos
+                    hospital.getDatabaseManager().savePatient(patient);
+
+                    // Sincronizar camas y contadores
+                    hospital.updateDepartmentBedCounts(this.name);
+                }
                 return;
             }
         }
@@ -153,6 +199,12 @@ public class Department{
         availableBeds++;
         occupiedBeds--;
         
+        // Sincronizar con base de datos
+        if (hospital != null) {
+            hospital.dischargePatient(patient, patient.getDischargeDate()); // Marcar como dado de alta en BD
+            hospital.updateDepartmentBedCounts(this.name); // Sincronizar camas y contadores
+        }
+
         System.out.println("Paciente " + patient.getName() + " dado de alta exitosamente\n");
         patient.showPatient();
         return patient;

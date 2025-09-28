@@ -1,91 +1,92 @@
 package hospital;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Menu {
-    protected BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
-    // Para limpiar la pantalla y que el texto no se acumule.
-    public void clear() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    private JFrame frame;
+
+    public Menu() {
+        frame = new JFrame("Sistema Hospitalario PUCV");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(null);
     }
 
-    // Pausa para poder leer el contenido que aparece en pantalla.
-    public void pause() throws IOException {
-        System.out.print("\nPresione cualquier letra para continuar...");
-        input.readLine();
+    // Mensaje informativo
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(frame, message);
     }
 
-    private int validateNum(String text) throws IOException {
+    // Pedir número dentro de un rango
+    public int validateNum(String text, int min, int max) {
         while (true) {
-            System.out.print(text);
+            String input = JOptionPane.showInputDialog(frame, text);
+            if (input == null) { // usuario cerró ventana
+                return min;
+            }
             try {
-                return Integer.parseInt(input.readLine());
+                int num = Integer.parseInt(input);
+                if (num >= min && num <= max) {
+                    return num;
+                }
+                showMessage("Debe estar entre " + min + " y " + max + ".");
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Ingrese solo números.\n");
+                showMessage("Entrada inválida. Ingrese solo números.");
             }
         }
     }
 
-    public int validateNum(String text, int min, int max) throws IOException {
-        while (true) {
-            int num = validateNum(text);
-            if (num >= min && num <= max) {
-                return num;
-            }
-            System.out.println("Debe estar entre " + min + " y " + max + ".");
-        }
-    }
-
+    // Mostrar departamentos disponibles
     public void displayAvailableDepartments(Hospital hospital) {
-        System.out.println("\nDepartamentos disponibles:");
+        StringBuilder sb = new StringBuilder("Departamentos disponibles:\n");
         ArrayList<Department> departments = hospital.getDepartmentsList();
-        for(Department dept : departments){
-            System.out.println("- " + dept.getName() + " (Camas libres: " + dept.getAvailableBeds() + ")");
+        for (Department dept : departments) {
+            sb.append("- ")
+                    .append(dept.getName())
+                    .append(" (Camas libres: ")
+                    .append(dept.getAvailableBeds())
+                    .append(")\n");
         }
+        showMessage(sb.toString());
     }
 
-    public Department validateDepartment(Hospital hospital) throws IOException {
+    // Selección de departamento
+    public Department validateDepartment(Hospital hospital) {
         displayAvailableDepartments(hospital);
 
-        System.out.print("Seleccione departamento (escribir exactamente): ");
-        String dName = input.readLine();
-        Department selectedDepartment = hospital.getDepartment(dName);
+        while (true) {
+            String dName = JOptionPane.showInputDialog(frame, "Seleccione departamento (escribir exactamente):");
+            if (dName == null) return null;
 
-        while(selectedDepartment == null) {
-            System.out.println("\nDepartamento no encontrado. Intente de nuevo.\n");
-            System.out.print("Seleccione departamento (escribir exactamente): ");
-            dName = input.readLine();
-
-            selectedDepartment = hospital.getDepartment(dName);
+            Department selectedDepartment = hospital.getDepartment(dName);
+            if (selectedDepartment != null) {
+                return selectedDepartment;
+            }
+            showMessage("Departamento no encontrado. Intente de nuevo.");
         }
-
-        return selectedDepartment;
     }
 
-    public boolean validateDepartmentExists(Hospital hospital) throws IOException {
-        if(hospital.getDepartmentsSize() == 0) {
-            System.out.println("No hay departamentos registrados. Por favor, registre uno primero.");
-            pause();
+    // Verificar que existan departamentos
+    public boolean validateDepartmentExists(Hospital hospital) {
+        if (hospital.getDepartmentsSize() == 0) {
+            showMessage("No hay departamentos registrados. Por favor, registre uno primero.");
             return false;
         }
         return true;
     }
 
-    public void display(Hospital hospital) throws IOException {
+    // Menú principal
+    public void display(Hospital hospital) {
         int option;
         do {
-            clear();
-            System.out.println("Bienvenido al sistema Hospitalario PUCV");
-            System.out.println("1. Administrar departamentos");
-            System.out.println("2. Administrar pacientes");
-            System.out.println("0. Salir");
+            String menu = "Bienvenido al sistema Hospitalario PUCV\n"
+                    + "1. Administrar departamentos\n"
+                    + "2. Administrar pacientes\n"
+                    + "0. Salir\n";
 
-            option = validateNum("Ingrese una opción: ", 0, 2);
+            option = validateNum(menu + "\nIngrese una opción:", 0, 2);
 
             switch (option) {
                 case 1:
@@ -93,14 +94,16 @@ public class Menu {
                     menu1.display(hospital);
                     break;
                 case 2:
-                    if(!validateDepartmentExists(hospital)) break;
+                    if (!validateDepartmentExists(hospital)) break;
                     MenuPatients menu2 = new MenuPatients();
                     menu2.display(hospital);
                     break;
                 case 0:
-                    System.out.println("Saliendo del sistema...");
+                    showMessage("Saliendo del sistema...");
                     break;
             }
         } while (option != 0);
+
+        frame.dispose();
     }
 }

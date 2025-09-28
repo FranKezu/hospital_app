@@ -100,6 +100,8 @@ public class Department{
         // Sincronizar con base de datos si el hospital está configurado
         if (hospital != null) {
             hospital.updateDepartmentBedCounts(this.name);
+            // Sincronizar todas las camas del departamento con la BD
+            hospital.getDatabaseManager().syncDepartmentBeds(this.name, this.getBedsList());
         }
     }
 
@@ -113,6 +115,8 @@ public class Department{
         // Sincronizar con base de datos si el hospital está configurado
         if (hospital != null) {
             hospital.updateDepartmentBedCounts(this.name);
+            // Sincronizar todas las camas del departamento con la BD
+            hospital.getDatabaseManager().syncDepartmentBeds(this.name, this.getBedsList());
         }
     }
 
@@ -174,7 +178,7 @@ public class Department{
     }
 
     public Patient discharge(int id){
-        
+
         // Validar que el ID sea positivo
         if (id <= 0) {
             System.out.println("ID de cama inválido: " + id);
@@ -198,7 +202,7 @@ public class Department{
         patient.setDischargeDate(java.time.LocalDate.now().toString());
         availableBeds++;
         occupiedBeds--;
-        
+
         // Sincronizar con base de datos
         if (hospital != null) {
             hospital.dischargePatient(patient, patient.getDischargeDate()); // Marcar como dado de alta en BD

@@ -83,9 +83,10 @@ public class Menu {
             System.out.println("Bienvenido al sistema Hospitalario PUCV");
             System.out.println("1. Administrar departamentos");
             System.out.println("2. Administrar pacientes");
+            System.out.println("3. Generar reporte");
             System.out.println("0. Salir");
 
-            option = validateNum("Ingrese una opción: ", 0, 2);
+            option = validateNum("Ingrese una opción: ", 0, 3);
 
             switch (option) {
                 case 1:
@@ -96,6 +97,12 @@ public class Menu {
                     if(!validateDepartmentExists(hospital)) break;
                     MenuPatients menu2 = new MenuPatients();
                     menu2.display(hospital);
+                    break;
+                case 3:
+                    if (!validateDepartmentExists(hospital)) break;
+                    ReportGenerator reportGenerator = new ReportGenerator();
+                    reportGenerator.generatePatientReport(hospital);
+                    System.out.println("Reporte generado exitosamente en un archivo de texto.");
                     break;
                 case 0:
                     System.out.println("Saliendo del sistema...");

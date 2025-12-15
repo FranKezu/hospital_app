@@ -8,7 +8,6 @@ public class Hospital {
     private String name;
     private String location;
     private Map<String, Department> departments;
-    //private DatabaseManager dbManager;
 
     public Hospital(String name, String location){
         this.name = name;
